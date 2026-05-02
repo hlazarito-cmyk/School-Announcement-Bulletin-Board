@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <div class="mb-8 text-center">
+        <h2 class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+        <p class="text-sm text-gray-600">Please sign in to access the bulletin board</p>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,4 +49,10 @@
             </x-primary-button>
         </div>
     </form>
+
+    <div class="mt-6 text-center">
+        <a href="{{ url('/') }}" class="text-xs text-gray-500 hover:text-gray-700">
+            &larr; Back to Home
+        </a>
+    </div>
 </x-guest-layout>

@@ -1,4 +1,8 @@
 <x-guest-layout>
+    <div class="mb-8 text-center">
+        <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
+        <p class="text-sm text-gray-600">Join our school community today</p>
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -49,4 +53,10 @@
             </x-primary-button>
         </div>
     </form>
+
+    <div class="mt-6 text-center">
+        <a href="{{ url('/') }}" class="text-xs text-gray-500 hover:text-gray-700">
+            &larr; Back to Home
+        </a>
+    </div>
 </x-guest-layout>
