@@ -18,7 +18,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::patch('announcements/{announcement}/archive', [\App\Http\Controllers\AnnouncementController::class, 'toggleArchive'])->name('announcements.archive');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bulletin', [\App\Http\Controllers\StudentController::class, 'index'])->name('bulletin');
+    Route::get('/bulletin/{announcement}', [\App\Http\Controllers\StudentController::class, 'show'])->name('bulletin.show');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
