@@ -31,6 +31,14 @@
                             </select>
                         </div>
 
+                        <div>
+                            <x-input-label for="sort" :value="__('Sort By')" />
+                            <select id="sort" name="sort" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
+                                <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
+                            </select>
+                        </div>
+
                         <div class="flex gap-2">
                             <x-primary-button>Filter</x-primary-button>
                             @if(request()->anyFilled(['category', 'priority']))

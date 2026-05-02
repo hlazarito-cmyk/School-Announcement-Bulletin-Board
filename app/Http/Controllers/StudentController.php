@@ -21,8 +21,11 @@ class StudentController extends Controller
             $query->where('priority', $request->priority);
         }
 
+        $sort = $request->get('sort', 'newest');
+        $order = $sort === 'oldest' ? 'asc' : 'desc';
+
         $announcements = $query->orderBy('is_pinned', 'desc')
-                               ->orderBy('created_at', 'desc')
+                               ->orderBy('created_at', $order)
                                ->paginate(12);
 
         $categories = Announcement::select('category')->distinct()->pluck('category');
