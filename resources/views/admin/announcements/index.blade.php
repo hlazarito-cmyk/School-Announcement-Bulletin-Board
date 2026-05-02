@@ -20,6 +20,19 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <!-- Search Bar -->
+                    <div class="mb-6">
+                        <form action="{{ route('admin.announcements.index') }}" method="GET" class="flex gap-2">
+                            <x-text-input name="search" placeholder="Search by title..." value="{{ request('search') }}" class="w-full md:w-1/3" />
+                            <x-primary-button>Search</x-primary-button>
+                            @if(request('search'))
+                                <a href="{{ route('admin.announcements.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 active:bg-gray-400 focus:outline-none transition ease-in-out duration-150">
+                                    Clear
+                                </a>
+                            @endif
+                        </form>
+                    </div>
+
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead>

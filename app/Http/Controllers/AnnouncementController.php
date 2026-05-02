@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $announcements = Announcement::latest()->paginate(10);
+        $query = Announcement::query();
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $announcements = $query->latest()->paginate(10);
         return view('admin.announcements.index', compact('announcements'));
     }
 
