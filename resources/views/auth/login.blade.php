@@ -48,6 +48,10 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+
+        <div class="mt-4 pt-4 border-t border-gray-100 text-center">
+            <p class="text-xs text-gray-500">Need an Admin account? <a href="{{ route('admin.register') }}" class="text-indigo-600 hover:underline">Register as Admin</a></p>
+        </div>
     </form>
 
     <div class="mt-6 text-center">
