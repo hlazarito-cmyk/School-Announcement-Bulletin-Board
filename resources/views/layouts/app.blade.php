@@ -13,6 +13,24 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            @media print {
+                .no-print, nav, header {
+                    display: none !important;
+                }
+                .py-12 {
+                    padding-top: 0 !important;
+                    padding-bottom: 0 !important;
+                }
+                .bg-gray-100 {
+                    background-color: white !important;
+                }
+                .shadow-sm, .shadow {
+                    box-shadow: none !important;
+                }
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

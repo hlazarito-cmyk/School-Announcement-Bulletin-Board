@@ -6,10 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Announcement;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
+    private function logActivity($description)
+    {
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'description' => $description,
+        ]);
+    }
     public function index(Request $request)
     {
         $query = Announcement::query();
@@ -36,7 +44,9 @@ class AnnouncementController extends Controller
             'category' => 'required|string|max:100',
         ]);
 
-        Auth::user()->announcements()->create($validated);
+        $announcement = Auth::user()->announcements()->create($validated);
+
+        $this->logActivity("Created announcement: " . $announcement->title);
 
         return redirect()->route('admin.announcements.index')->with('success', 'Announcement created successfully!');
     }
@@ -62,12 +72,18 @@ class AnnouncementController extends Controller
 
         $announcement->update($validated);
 
+        $this->logActivity("Updated announcement: " . $announcement->title);
+
         return redirect()->route('admin.announcements.index')->with('success', 'Announcement updated successfully!');
     }
 
     public function destroy(Announcement $announcement)
     {
+        $title = $announcement->title;
         $announcement->delete();
+
+        $this->logActivity("Deleted announcement: " . $title);
+
         return redirect()->route('admin.announcements.index')->with('success', 'Announcement deleted successfully!');
     }
 
