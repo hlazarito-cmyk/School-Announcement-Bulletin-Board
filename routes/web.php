@@ -16,6 +16,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::resource('announcements', \App\Http\Controllers\AnnouncementController::class);
     Route::patch('announcements/{announcement}/pin', [\App\Http\Controllers\AnnouncementController::class, 'togglePin'])->name('announcements.pin');
     Route::patch('announcements/{announcement}/archive', [\App\Http\Controllers\AnnouncementController::class, 'toggleArchive'])->name('announcements.archive');
+    
+    // User Management (Janice's Task)
+    Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::patch('users/{user}/toggle-role', [\App\Http\Controllers\Admin\UserController::class, 'toggleRole'])->name('users.toggle-role');
+    Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {

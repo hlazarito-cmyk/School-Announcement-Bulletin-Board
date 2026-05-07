@@ -27,6 +27,10 @@
                         <x-nav-link :href="route('admin.announcements.index')" :active="request()->routeIs('admin.announcements.*')">
                             {{ __('Manage Announcements') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Manage Users') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
