@@ -25,7 +25,7 @@ class CategoryController extends Controller
         return back()->with('success', 'Category created successfully!');
     }
 
-    public function update(Request $request, Category category)
+    public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:50|unique:categories,name,' . $category->id,
@@ -36,7 +36,7 @@ class CategoryController extends Controller
         return back()->with('success', 'Category updated successfully!');
     }
 
-    public function destroy(Category category)
+    public function destroy(Category $category)
     {
         if ($category->announcements()->count() > 0) {
             return back()->with('error', 'Cannot delete category that has announcements.');
