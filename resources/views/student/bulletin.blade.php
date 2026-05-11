@@ -16,7 +16,7 @@
                             <select id="category" name="category" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">All Categories</option>
                                 @foreach($categories as $cat)
-                                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                                    <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,14 +55,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($announcements as $announcement)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-t-4 {{ $announcement->is_pinned ? 'border-indigo-500' : 'border-gray-200' }} hover:shadow-md transition-shadow duration-300">
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col h-full">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="flex flex-col">
-                                    <span class="text-xs font-semibold text-gray-400 uppercase">{{ $announcement->category }}</span>
+                                    <span class="text-xs font-semibold text-gray-400 uppercase">
+                                        {{ $announcement->category->name ?? 'Uncategorized' }}
+                                    </span>
                                     <h3 class="text-xl font-bold text-gray-900 mt-1 line-clamp-1">{{ $announcement->title }}</h3>
                                 </div>
                                 @if($announcement->is_pinned)
-                                    <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-1 rounded-full font-bold uppercase">Pinned</span>
+                                    <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-1 rounded-full font-bold uppercase shrink-0 ml-2">Pinned</span>
                                 @endif
                             </div>
                             

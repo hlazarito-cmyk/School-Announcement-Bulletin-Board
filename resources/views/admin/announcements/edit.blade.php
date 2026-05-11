@@ -20,9 +20,16 @@
                         </div>
 
                         <div class="mb-4">
-                            <x-input-label for="category" :value="__('Category')" />
-                            <x-text-input id="category" class="block mt-1 w-full" type="text" name="category" :value="old('category', $announcement->category)" required />
-                            <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                            <x-input-label for="category_id" :value="__('Category')" />
+                            <select id="category_id" name="category_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                <option value="">Select a Category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $announcement->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                         </div>
 
                         <div class="mb-4">

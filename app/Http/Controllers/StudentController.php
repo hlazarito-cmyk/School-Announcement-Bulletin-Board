@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Announcement;
+use App\Models\Category;
 
 class StudentController extends Controller
 {
@@ -14,7 +15,7 @@ class StudentController extends Controller
         $query = Announcement::where('is_archived', false);
 
         if ($request->filled('category')) {
-            $query->where('category', $request->category);
+            $query->where('category_id', $request->category);
         }
 
         if ($request->filled('priority')) {
@@ -24,11 +25,11 @@ class StudentController extends Controller
         $sort = $request->get('sort', 'newest');
         $order = $sort === 'oldest' ? 'asc' : 'desc';
 
-        $announcements = $query->orderBy('is_pinned', 'desc')
+        $announcements = $query->with('category')->orderBy('is_pinned', 'desc')
                                ->orderBy('created_at', $order)
                                ->paginate(12);
 
-        $categories = Announcement::select('category')->distinct()->pluck('category');
+        $categories = Category::all();
 
         return view('student.bulletin', compact('announcements', 'categories'));
     }

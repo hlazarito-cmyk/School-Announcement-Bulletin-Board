@@ -10,7 +10,7 @@ class Announcement extends Model
         'title',
         'content',
         'priority',
-        'category',
+        'category_id',
         'is_pinned',
         'is_archived',
         'user_id',
@@ -19,5 +19,10 @@ class Announcement extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

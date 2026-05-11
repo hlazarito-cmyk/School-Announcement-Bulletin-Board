@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Announcement;
 use App\Models\ActivityLog;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
@@ -26,13 +27,14 @@ class AnnouncementController extends Controller
             $query->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $announcements = $query->latest()->paginate(10);
+        $announcements = $query->with('category')->latest()->paginate(10);
         return view('admin.announcements.index', compact('announcements'));
     }
 
     public function create()
     {
-        return view('admin.announcements.create');
+        $categories = Category::all();
+        return view('admin.announcements.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -41,7 +43,7 @@ class AnnouncementController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'priority' => 'required|in:low,medium,high',
-            'category' => 'required|string|max:100',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $announcement = Auth::user()->announcements()->create($validated);
@@ -58,7 +60,8 @@ class AnnouncementController extends Controller
 
     public function edit(Announcement $announcement)
     {
-        return view('admin.announcements.edit', compact('announcement'));
+        $categories = Category::all();
+        return view('admin.announcements.edit', compact('announcement', 'categories'));
     }
 
     public function update(Request $request, Announcement $announcement)
@@ -67,7 +70,7 @@ class AnnouncementController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'priority' => 'required|in:low,medium,high',
-            'category' => 'required|string|max:100',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $announcement->update($validated);
